@@ -11,5 +11,5 @@ src/app-compiled.js.map
 .idea/*
 webpack.config-compiled.js
 webpack.config-compiled.js.map
-dist/*
+
 .idea/workspace.xml
