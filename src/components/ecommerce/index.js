@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { products as catalogProducts } from  '../../data/catalog';
 import Catalog from './catalog';
 import Cart from './cart';
+import Checkout from './chekout';
 
 class Ecommerce extends Component {
     constructor() {
@@ -10,10 +11,43 @@ class Ecommerce extends Component {
             page: 'catalog',
             products: catalogProducts,
             cart: [],
+            orderDetails: {},
+            orderErrors: {}
         }
         this.handleNavigate = this.handleNavigate.bind(this);
         this.handleAddToCart = this.handleAddToCart.bind(this);
         this.handleChangeQuantity = this.handleChangeQuantity.bind(this);
+        this.handleCheckout = this.handleCheckout.bind(this);
+    }
+
+    handleCheckout(details) {
+        let erros = {};
+        // verificar
+        if(details.firstName === '') {
+            erros.firstName = 'El nombre es obligatorio';
+        }
+        if(details.lastName === '') {
+            erros.lastName = 'Los apellidos son obligatorios';
+        }
+        if(details.email === '') {
+            erros.email = 'El email es obligatorio';
+        }
+        if(details.address === '') {
+            erros.address = 'La dirección es obligatoria';
+        }
+
+
+        if(Object.keys(erros).length) {
+            this.setState({
+                orderErrors: erros
+            });
+        }else {
+            this.setState({
+                orderDetails: details,
+                cart: [],
+                page: 'thank-you'
+            });
+        }
     }
 
     handleAddToCart(product) {
@@ -69,7 +103,11 @@ class Ecommerce extends Component {
                     products={ this.state.cart }
                     onChangeQuantity={ this.handleChangeQuantity }
                     onNavigate={ this.handleNavigate } />
-
+            case 'checkout':
+                return <Checkout
+                    errors={ this.state.orderErrors }
+                    onProcessOrder={ this.handleCheckout }
+                    onBackToCart={ () => this.handleNavigate('cart') }/>
             default:
                 return null;
         }
