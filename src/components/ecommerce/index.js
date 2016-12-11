@@ -3,6 +3,7 @@ import { products as catalogProducts } from  '../../data/catalog';
 import Catalog from './catalog';
 import Cart from './cart';
 import Checkout from './chekout';
+import ThankYou from './thank_you';
 
 class Ecommerce extends Component {
     constructor() {
@@ -108,6 +109,10 @@ class Ecommerce extends Component {
                     errors={ this.state.orderErrors }
                     onProcessOrder={ this.handleCheckout }
                     onBackToCart={ () => this.handleNavigate('cart') }/>
+            case 'thank-you':
+                return <ThankYou
+                    orderDetails={ this.state.orderDetails }
+                    onBackToShopping={ () => this.handleNavigate('catalog') } />
             default:
                 return null;
         }
