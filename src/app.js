@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import Saludo from './components/hello';
+import Ecommerce from './components/ecommerce';
 
-ReactDom.render(<Saludo />, document.getElementById('app'));
+ReactDom.render(<Ecommerce />, document.getElementById('app'));
